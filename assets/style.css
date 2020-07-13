@@ -1,0 +1,23 @@
+#p1{
+    font-weight: bolder;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#reg-wise-count{
+    width: 40%;
+}
+
+
+#year-attack{
+    width: 30%;
+}
+
+#state_attack_type{
+    width: 40%;
+}
+
+#g1{
+    text-align: center;
+    margin: auto;
+    width: 900px;
+    height: 1000px;
+}
