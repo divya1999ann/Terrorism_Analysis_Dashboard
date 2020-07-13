@@ -1,3 +1,3 @@
 # Terrorism_Analysis
 
-Please run the python index.py in the command line.
+Please run   python index.py   in the command line.
