@@ -391,6 +391,10 @@ def App():
     html.Br(),
 
     html.Div(style={
+        'backgroundColor': '#000000' 
+    },
+    children=[html.Br()]),
+    html.Div(style={
         'backgroundColor':'#D3D3D3',
         },
         children=[

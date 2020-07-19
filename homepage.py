@@ -234,6 +234,12 @@ def Homepage():
     ),
 
     html.Br(),
+
+
+    html.Div(style={
+        'backgroundColor': '#000000' 
+    },
+    children=[html.Br()]),
     html.Div(
         style={
         'backgroundColor':'#D3D3D3',
@@ -249,6 +255,11 @@ def Homepage():
         html.Br()
         ]
     ),
+     html.Div(style={
+        'backgroundColor': '#000000' 
+    },
+    children=[html.Br()]),
+
     html.Br(),
     html.Label("Choose a month"),
     html.Div([func_month1()]),
