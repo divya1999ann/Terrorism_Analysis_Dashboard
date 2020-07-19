@@ -266,6 +266,77 @@ def yeargraph(input_choice):
 
 
 
+
+#callback for stack chart
+@app.callback(Output(component_id='country_wise_line',component_property='figure'),
+[Input('stacked_chart','value')])
+def func_stacked_chart(input_choice):
+    region_chart_list = []
+
+    if input_choice==0:
+        for i in data['iyear'].unique():
+            dfx = data[data['iyear']==i]
+            for j in dfx['region_txt'].unique():
+                dfx1 = dfx[dfx['region_txt']==j]
+                for k in dfx1['country_txt'].unique():
+                    l=[]
+                    l.append(i)
+                    l.append(j)
+                    l.append(k)
+                    l.append(dfx1['country_txt'].value_counts()[k])
+                    region_chart_list.append(l)
+        region_chart_df = pd.DataFrame(region_chart_list,columns=['Year','Region','Country','Attack_cnt'])
+        fig = px.area(region_chart_df, x="Year", y="Attack_cnt", color="Region",line_group="Country")
+
+    elif input_choice==1:
+        for i in data['iyear'].unique():
+            dfx = data[data['iyear']==i]
+            for j in dfx['region_txt'].unique():
+                dfx1 = dfx[dfx['region_txt']==j]
+                for k in dfx1['attacktype1_txt'].unique():
+                    l=[]
+                    l.append(i)
+                    l.append(j)
+                    l.append(k)
+                    l.append(dfx1['attacktype1_txt'].value_counts()[k])
+                    region_chart_list.append(l)
+        region_chart_df = pd.DataFrame(region_chart_list,columns=['Year','Region','Attack_type','Attack_cnt'])
+        fig = px.area(region_chart_df, x="Year", y="Attack_cnt", color="Region",line_group="Attack_type")
+
+    elif input_choice==2:
+        for i in data['iyear'].unique():
+            dfx = data[data['iyear']==i]
+            for j in dfx['region_txt'].unique():
+                dfx1 = dfx[dfx['region_txt']==j]
+                for k in dfx1['targtype1_txt'].unique():
+                    l=[]
+                    l.append(i)
+                    l.append(j)
+                    l.append(k)
+                    l.append(dfx1['targtype1_txt'].value_counts()[k])
+                    region_chart_list.append(l)
+        region_chart_df = pd.DataFrame(region_chart_list,columns=['Year','Region','Target_type','Attack_cnt'])
+        fig = px.area(region_chart_df, x="Year", y="Attack_cnt", color="Region",line_group="Target_type")
+
+    elif input_choice==3:
+        for i in data['iyear'].unique():
+            dfx = data[data['iyear']==i]
+            for j in dfx['region_txt'].unique():
+                dfx1 = dfx[dfx['region_txt']==j]
+                for k in dfx1['weaptype1_txt'].unique():
+                    l=[]
+                    l.append(i)
+                    l.append(j)
+                    l.append(k)
+                    l.append(dfx1['weaptype1_txt'].value_counts()[k])
+                    region_chart_list.append(l)
+        region_chart_df = pd.DataFrame(region_chart_list,columns=['Year','Region','Weapon_type','Attack_cnt'])
+        fig = px.area(region_chart_df, x="Year", y="Attack_cnt", color="Region",line_group="Weapon_type")
+
+    return fig
+
+
+
 #-----------------------------------------------------ending callbacks-------------------------------------------------------
 
 def open_browser():
@@ -275,4 +346,4 @@ def open_browser():
 
 if __name__ == '__main__':
     webbrowser.open_new_tab('http://127.0.0.1:8050/') #for opening automatically
-    app.run_server(debug=True)
+    app.run_server(debug=False)

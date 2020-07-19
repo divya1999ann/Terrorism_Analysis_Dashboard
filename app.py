@@ -176,6 +176,36 @@ def func_state_type():
 
 
 
+#dropdown for stacked chart
+def func_stacked_chart():
+    r =[
+        {'label':'By country','value':0},
+        {'label':'By Attack Type','value':1},
+        {'label':'By target type','value':2},
+        {'label':'By weapon type','value':3},
+    ]
+    return dcc.Dropdown(
+        id='stacked_chart',
+        options=r,
+        value=0
+    )
+
+
+#pie for target type and percentage
+def targettype_count():
+    target_list=[]
+    for i in data['targtype1_txt'].unique():
+        l=[]
+        l.append(i)
+        l.append(data['targtype1_txt'].value_counts()[i])
+        target_list.append(l)
+    target_df = pd.DataFrame(target_list,columns=['Target_type','Attack_cnt'])
+    fig = px.pie(target_df, values='Attack_cnt', names='Target_type',
+             title='Target types and their percentage',
+             hover_data=['Attack_cnt'], labels={'Attack_cnt':'Count of attacks','Target_type':'Target Type'})
+    return fig
+
+
 
 #function for heatmap
 rlist = []
@@ -349,6 +379,14 @@ def App():
     placeholder="Please select a year"
     ),
     dcc.Graph(id="year_graph"),
+
+
+    html.Br(),
+    html.P('Incidents per year grouped by'),
+    html.Div([func_stacked_chart()]),
+    dcc.Graph(id='country_wise_line'),
+    html.Br(),
+    dcc.Graph(id='target_type',figure=targettype_count()),
 
     html.Br(),
 
