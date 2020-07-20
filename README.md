@@ -1,12 +1,12 @@
 # Terrorism_Analysis
 
-##**Technology Stack**
+**##Technology Stack**
 * Python
-* Flask / Plotly / Dash
+* Flask
+* Plotly / Dash
 * Matplotlib
 * Pandas / Numpy
-* WebDev Tools ( HTML / CSS / JS )
-* Git and GitHub
+* HTML / CSS / JS
 
 
 
