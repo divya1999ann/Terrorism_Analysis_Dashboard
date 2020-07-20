@@ -1,6 +1,6 @@
 # Terrorism_Analysis
 
-**## Technology Stack**
+**Technology Stack**
 * Python
 * Flask
 * Plotly / Dash
