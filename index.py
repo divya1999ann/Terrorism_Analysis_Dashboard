@@ -10,6 +10,7 @@ import pandas as pd
 from scipy.interpolate import interp1d
 import webbrowser
 from threading import Timer
+import logging
 
 
 #loading dataset
@@ -346,5 +347,5 @@ def open_browser():
 
 if __name__ == '__main__':
 	logging.basicConfig(filename="test.log",level=logging.DEBUG, format='%(asctime)s : %(levelname)s : %(message)s')
-    webbrowser.open_new_tab('http://127.0.0.1:8050/') #for opening automatically
-    app.run_server(debug=False)
+	webbrowser.open_new_tab('http://127.0.0.1:8050/') #for opening automatically
+	app.run_server(debug=False)
