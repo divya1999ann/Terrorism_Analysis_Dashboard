@@ -2,8 +2,7 @@ import pandas as pd     #(version 1.0.0)
 import plotly           #(version 4.5.0)
 import plotly.express as px
 import dash             #(version 1.8.0)
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate

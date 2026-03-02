@@ -1,0 +1,164 @@
+2026-03-02 10:40:28,010 : INFO : Dash is running on http://127.0.0.1:8050/
+
+2026-03-02 10:40:28,022 : INFO : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8050
+2026-03-02 10:40:28,022 : INFO : [33mPress CTRL+C to quit[0m
+2026-03-02 10:40:28,168 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET / HTTP/1.1" 200 -
+2026-03-02 10:40:28,620 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /assets/style.css HTTP/1.1" 200 -
+2026-03-02 10:40:28,622 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /assets/style.css?m=1772446015.2074816 HTTP/1.1" 200 -
+2026-03-02 10:40:28,624 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash/deps/polyfill@7.v2_14_2m1772447530.12.1.min.js HTTP/1.1" 200 -
+2026-03-02 10:40:28,625 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash/deps/react@16.v2_14_2m1772447530.14.0.min.js HTTP/1.1" 200 -
+2026-03-02 10:40:28,626 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash/deps/react-dom@16.v2_14_2m1772447530.14.0.min.js HTTP/1.1" 200 -
+2026-03-02 10:40:28,626 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash/deps/prop-types@15.v2_14_2m1772447530.8.1.min.js HTTP/1.1" 200 -
+2026-03-02 10:40:28,627 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash_bootstrap_components/_components/dash_bootstrap_components.v1_5_0m1772447530.min.js HTTP/1.1" 200 -
+2026-03-02 10:40:28,628 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash/dash-renderer/build/dash_renderer.v2_14_2m1772447530.min.js HTTP/1.1" 200 -
+2026-03-02 10:40:28,629 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash/dcc/dash_core_components.v2_12_1m1772447530.js HTTP/1.1" 200 -
+2026-03-02 10:40:28,629 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash/dcc/dash_core_components-shared.v2_12_1m1772447530.js HTTP/1.1" 200 -
+2026-03-02 10:40:28,630 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash/html/dash_html_components.v2_0_15m1772447530.min.js HTTP/1.1" 200 -
+2026-03-02 10:40:28,630 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:28] "GET /_dash-component-suites/dash/dash_table/bundle.v5_2_8m1772447530.js HTTP/1.1" 200 -
+2026-03-02 10:40:29,184 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "GET /_dash-layout HTTP/1.1" 200 -
+2026-03-02 10:40:29,185 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "GET /_dash-dependencies HTTP/1.1" 200 -
+2026-03-02 10:40:29,240 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:40:29,248 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "GET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1" 200 -
+2026-03-02 10:40:29,248 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "GET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1" 200 -
+2026-03-02 10:40:29,251 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "GET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1" 200 -
+2026-03-02 10:40:29,257 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:40:29,257 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:40:29,258 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:40:29,259 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:40:29,401 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "GET /_favicon.ico?v=2.14.2 HTTP/1.1" 200 -
+2026-03-02 10:40:29,665 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:40:29,678 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:29] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:40:33,657 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:33] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:40:40,853 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:40] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:40:43,926 : INFO : 127.0.0.1 - - [02/Mar/2026 10:40:43] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:17,305 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "GET / HTTP/1.1" 200 -
+2026-03-02 10:41:17,309 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /assets/style.css?m=1772446015.2074816 HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,310 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /assets/style.css HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,310 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,311 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,314 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /assets/style.css HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,314 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,315 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /assets/style.css?m=1772446015.2074816 HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,364 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "GET /_dash-layout HTTP/1.1" 200 -
+2026-03-02 10:41:17,365 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "GET /_dash-dependencies HTTP/1.1" 200 -
+2026-03-02 10:41:17,408 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:17,414 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,415 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,417 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:17,424 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:17,425 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:17,426 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:17,431 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:17,454 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:17,666 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:17] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:42,448 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "GET / HTTP/1.1" 200 -
+2026-03-02 10:41:42,451 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /assets/style.css HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,451 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /assets/style.css?m=1772446015.2074816 HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,451 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,453 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,456 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,457 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /assets/style.css HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,458 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /assets/style.css?m=1772446015.2074816 HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,504 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "GET /_dash-layout HTTP/1.1" 200 -
+2026-03-02 10:41:42,505 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "GET /_dash-dependencies HTTP/1.1" 200 -
+2026-03-02 10:41:42,550 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:42,556 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,557 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,558 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2026-03-02 10:41:42,561 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:42,562 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:42,563 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:42,563 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:42,595 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:42,793 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:42] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:44,620 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:44] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:50,845 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:50] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:52,237 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:52] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:41:54,601 : INFO : 127.0.0.1 - - [02/Mar/2026 10:41:54] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:06,358 : INFO : Dash is running on http://127.0.0.1:8050/
+
+2026-03-02 10:42:06,390 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "GET / HTTP/1.1" 200 -
+2026-03-02 10:42:06,402 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "[36mGET /assets/style.css?m=1772446015.2074816 HTTP/1.1[0m" 304 -
+2026-03-02 10:42:06,402 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "[36mGET /assets/style.css HTTP/1.1[0m" 304 -
+2026-03-02 10:42:06,419 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "GET /_dash-layout HTTP/1.1" 200 -
+2026-03-02 10:42:06,420 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "GET /_dash-dependencies HTTP/1.1" 200 -
+2026-03-02 10:42:06,446 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:06,451 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2026-03-02 10:42:06,451 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2026-03-02 10:42:06,454 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2026-03-02 10:42:06,455 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:06,455 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:06,456 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:06,456 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:06,482 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:06,715 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:06] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:13,346 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:13] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:20,434 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:20] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:34,835 : INFO : Dash is running on http://127.0.0.1:8050/
+
+2026-03-02 10:42:34,842 : INFO : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8050
+2026-03-02 10:42:34,842 : INFO : [33mPress CTRL+C to quit[0m
+2026-03-02 10:42:34,897 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "GET / HTTP/1.1" 200 -
+2026-03-02 10:42:34,908 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "[36mGET /assets/style.css HTTP/1.1[0m" 304 -
+2026-03-02 10:42:34,909 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "[36mGET /assets/style.css?m=1772446015.2074816 HTTP/1.1[0m" 304 -
+2026-03-02 10:42:34,924 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "GET /_dash-layout HTTP/1.1" 200 -
+2026-03-02 10:42:34,925 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "GET /_dash-dependencies HTTP/1.1" 200 -
+2026-03-02 10:42:34,961 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:34,966 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2026-03-02 10:42:34,967 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2026-03-02 10:42:34,971 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:34,971 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2026-03-02 10:42:34,971 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:34,972 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:34,972 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:34] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:35,360 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:35] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:35,372 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:35] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:57,319 : INFO : Dash is running on http://127.0.0.1:8050/
+
+2026-03-02 10:42:57,352 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "GET / HTTP/1.1" 200 -
+2026-03-02 10:42:57,362 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "[36mGET /assets/style.css?m=1772446015.2074816 HTTP/1.1[0m" 304 -
+2026-03-02 10:42:57,362 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "[36mGET /assets/style.css HTTP/1.1[0m" 304 -
+2026-03-02 10:42:57,414 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "GET /_dash-layout HTTP/1.1" 200 -
+2026-03-02 10:42:57,414 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "GET /_dash-dependencies HTTP/1.1" 200 -
+2026-03-02 10:42:57,443 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:57,450 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2026-03-02 10:42:57,450 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2026-03-02 10:42:57,454 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2026-03-02 10:42:57,457 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:57,457 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:57,458 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:57,458 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:57,494 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 10:42:57,699 : INFO : 127.0.0.1 - - [02/Mar/2026 10:42:57] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 21:06:41,029 : INFO : Dash is running on http://127.0.0.1:8050/
+
+2026-03-02 21:06:41,046 : INFO : [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:8050
+2026-03-02 21:06:41,046 : INFO : [33mPress CTRL+C to quit[0m
+2026-03-02 21:06:41,129 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET / HTTP/1.1" 200 -
+2026-03-02 21:06:41,521 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash/deps/polyfill@7.v2_14_2m1772447611.12.1.min.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,524 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash/deps/react@16.v2_14_2m1772447611.14.0.min.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,525 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash/deps/prop-types@15.v2_14_2m1772447611.8.1.min.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,525 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash/deps/react-dom@16.v2_14_2m1772447611.14.0.min.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,526 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash_bootstrap_components/_components/dash_bootstrap_components.v1_5_0m1772447611.min.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,527 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash/dash-renderer/build/dash_renderer.v2_14_2m1772447611.min.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,528 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash/dcc/dash_core_components-shared.v2_12_1m1772447611.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,528 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash/dcc/dash_core_components.v2_12_1m1772447611.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,528 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash/html/dash_html_components.v2_0_15m1772447611.min.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,529 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-component-suites/dash/dash_table/bundle.v5_2_8m1772447611.js HTTP/1.1" 200 -
+2026-03-02 21:06:41,530 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "[36mGET /assets/style.css HTTP/1.1[0m" 304 -
+2026-03-02 21:06:41,530 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "[36mGET /assets/style.css?m=1772446015.2074816 HTTP/1.1[0m" 304 -
+2026-03-02 21:06:41,598 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-layout HTTP/1.1" 200 -
+2026-03-02 21:06:41,598 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "GET /_dash-dependencies HTTP/1.1" 200 -
+2026-03-02 21:06:41,654 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 21:06:41,662 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "[36mGET /_dash-component-suites/dash/dcc/async-dropdown.js HTTP/1.1[0m" 304 -
+2026-03-02 21:06:41,662 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "[36mGET /_dash-component-suites/dash/dcc/async-graph.js HTTP/1.1[0m" 304 -
+2026-03-02 21:06:41,667 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "[36mGET /_dash-component-suites/plotly/package_data/plotly.min.js HTTP/1.1[0m" 304 -
+2026-03-02 21:06:41,670 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 21:06:41,671 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 21:06:41,671 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 21:06:41,671 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:41] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 21:06:42,069 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:42] "POST /_dash-update-component HTTP/1.1" 200 -
+2026-03-02 21:06:42,080 : INFO : 127.0.0.1 - - [02/Mar/2026 21:06:42] "POST /_dash-update-component HTTP/1.1" 200 -

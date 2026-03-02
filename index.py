@@ -1,13 +1,14 @@
+import os
+
 import dash
-import dash_core_components as dcc
-import dash_html_components as html
+from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import plotly.express as px
 import dash_bootstrap_components as dbc
 from app import App,region_graph
 from homepage import Homepage
 import pandas as pd
-from scipy.interpolate import interp1d
+import numpy as np
 import webbrowser
 from threading import Timer
 import logging
@@ -185,7 +186,7 @@ def makecity(input_choice):
     [
     Output(component_id='simple_graph', component_property='figure'),
      Output(component_id='concen_graph', component_property='figure')],
-    [Input('bt1', 'n_clicks')],
+    inputs=Input('bt1', 'n_clicks'),
     state=[State('mont', 'value'),
      State('day', 'value'),
      State('attacks', 'value'),
@@ -207,7 +208,7 @@ def compute(n_clicks, input1, input2, input3,input4,input5,input6):
 
 #callback for generating map 2
 @app.callback(Output(component_id='india_graph', component_property='figure'),
-    [Input('bt2', 'n_clicks')],
+    inputs=Input('bt2', 'n_clicks'),
     state=[State('mont1', 'value'),
      State('day1', 'value'),
      State('attacks1', 'value'),
@@ -220,7 +221,7 @@ def compute1(n_clicks, inp1, inp2, inp3,inp4):
     state_cnt_list = []
     for i in data1['provstate'].unique():
         state_cnt_list.append(data['provstate'].value_counts()[i])
-    m= interp1d([1,max(state_cnt_list)],[5,18])
+    m = lambda x: np.interp(x, [1, max(state_cnt_list)], [5, 18])
     circle_radius = m(state_cnt_list)
     fig1=px.density_mapbox(res1,lat="latitude", lon="longitude",hover_name="city",zoom=3,radius = circle_radius,mapbox_style='open-street-map',height=400)
     return (fig1)
@@ -346,6 +347,8 @@ def open_browser():
 
 
 if __name__ == '__main__':
-	logging.basicConfig(filename="test.log",level=logging.DEBUG, format='%(asctime)s : %(levelname)s : %(message)s')
-	webbrowser.open_new_tab('http://127.0.0.1:8050/') #for opening automatically
-	app.run_server(debug=False)
+    app.run_server(
+        debug=False,
+        host="0.0.0.0",
+        port=int(os.environ.get("PORT", 8050))
+    )
