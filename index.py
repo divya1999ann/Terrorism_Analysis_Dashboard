@@ -15,7 +15,7 @@ import logging
 
 
 #loading dataset
-data = pd.read_csv('terror-data1.csv')
+data = pd.read_csv('https://terror-data-bucket.s3.eu-north-1.amazonaws.com/terror-data1.csv')
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.UNITED,'/assets/style.css'])
 
