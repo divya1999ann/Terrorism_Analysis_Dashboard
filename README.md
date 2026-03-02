@@ -12,3 +12,6 @@
 
 
 Run   **python index.py**   in the command line.
+
+
+Live at - https://terrorism-analysis-dashboard.onrender.com
