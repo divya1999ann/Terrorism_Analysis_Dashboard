@@ -13,7 +13,7 @@ import plotly.graph_objs as go
 
 
 
-data = pd.read_csv('terror-data1.csv')
+data = pd.read_csv('https://terror-data-bucket.s3.eu-north-1.amazonaws.com/terror-data1.csv')
 
 nav = Navbar()
 

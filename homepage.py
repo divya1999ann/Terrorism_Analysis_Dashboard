@@ -12,9 +12,7 @@ from navbar import Navbar
 nav = Navbar()
 
 
-data = pd.read_csv('terror-data1.csv')
-
-
+data = pd.read_csv('https://terror-data-bucket.s3.eu-north-1.amazonaws.com/terror-data1.csv')
 
 months = {1:'January',2:'February',3:'March',4:'April',5:'May',6:'June',7:'July',8:'August',9:'September',10:'October',11:'November',12:'December'}
 days_cnt= {30:[4,6,9,11],31:[1,3,5,7,8,10,12],29:[2]}
