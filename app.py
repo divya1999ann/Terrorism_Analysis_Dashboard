@@ -1,447 +1,259 @@
-import pandas as pd     #(version 1.0.0)
-import plotly           #(version 4.5.0)
+import pandas as pd
 import plotly.express as px
-import dash             #(version 1.8.0)
+import dash
 from dash import dcc, html
 from dash.dependencies import Input, Output, State
 import dash_bootstrap_components as dbc
 from dash.exceptions import PreventUpdate
 from navbar import Navbar
-import plotly.graph_objects as go   
+import plotly.graph_objects as go
 import numpy as np
-import plotly.graph_objs as go
+import gc
 
+# ─── MEMORY-OPTIMIZED DATA LOADING ────────────────────────────────────────────
+# Only load the columns you actually use.
+# `nkill` and `nwound` are optional because some dataset exports omit them.
+REQUIRED_COLS = [
+    'iyear', 'region_txt', 'country_txt', 'provstate',
+    'attacktype1_txt', 'targtype1_txt'
+]
+OPTIONAL_COLS = ['nkill', 'nwound']
+DATA_URL = 'https://terror-data-bucket.s3.eu-north-1.amazonaws.com/terror-data1.csv'
 
+available_cols = pd.read_csv(DATA_URL, nrows=0).columns.tolist()
+missing_required = [c for c in REQUIRED_COLS if c not in available_cols]
+if missing_required:
+    raise ValueError(f"Dataset is missing required columns: {missing_required}")
 
-data = pd.read_csv('https://terror-data-bucket.s3.eu-north-1.amazonaws.com/terror-data1.csv')
+cols_to_load = [c for c in REQUIRED_COLS + OPTIONAL_COLS if c in available_cols]
+data = pd.read_csv(DATA_URL, usecols=cols_to_load, low_memory=True)
+
+# Convert string columns to 'category' dtype — saves ~60% RAM on these columns
+for col in ['region_txt', 'country_txt', 'provstate', 'attacktype1_txt', 'targtype1_txt']:
+    data[col] = data[col].astype('category')
+
+# Downcast numeric columns
+data['iyear'] = pd.to_numeric(data['iyear'], errors='coerce').astype('Int16')
+if 'nkill' in data.columns:
+    data['nkill'] = pd.to_numeric(data['nkill'], errors='coerce').astype('float32')
+else:
+    data['nkill'] = np.nan
+    data['nkill'] = data['nkill'].astype('float32')
+
+if 'nwound' in data.columns:
+    data['nwound'] = pd.to_numeric(data['nwound'], errors='coerce').astype('float32')
+else:
+    data['nwound'] = np.nan
+    data['nwound'] = data['nwound'].astype('float32')
+
+# ─── PRE-COMPUTE AGGREGATES ONCE ──────────────────────────────────────────────
+# This replaces all the slow value_counts() loops in each function.
+# We compute summary tables once and discard nothing (the full data is still
+# needed for filtered views), but aggregates are tiny compared to the raw data.
+
+reg_counts    = data['region_txt'].value_counts().reset_index()
+reg_counts.columns = ['region_name', 'region_cnt']
+
+year_counts   = data['iyear'].value_counts().reset_index()
+year_counts.columns = ['Year', 'year_cnt']
+
+attack_counts = data['attacktype1_txt'].value_counts().reset_index()
+attack_counts.columns = ['Attack_type', 'Attack_cnt']
+
+target_counts = data['targtype1_txt'].value_counts().reset_index()
+target_counts.columns = ['Target_type', 'Attack_cnt']
+
+india_data    = data[data['country_txt'] == 'India'].copy()
+
+state_counts  = india_data['provstate'].value_counts().reset_index()
+state_counts.columns = ['State', 'Attack_cnt']
+
+india_attacks = india_data['attacktype1_txt'].value_counts().reset_index()
+india_attacks.columns = ['Attack Type', 'attack_cnt']
+
+india_year_counts = india_data['iyear'].value_counts().reset_index()
+india_year_counts.columns = ['Year', 'Attack_cnt']
+# Fill in years with 0 attacks
+all_years = pd.DataFrame({'Year': range(1970, 2019)})
+india_year_counts = all_years.merge(india_year_counts, on='Year', how='left').fillna(0)
+india_year_counts = india_year_counts.sort_values('Year')
+
+# Force garbage collection after setup
+gc.collect()
 
 nav = Navbar()
 
+# ─── CHART FUNCTIONS (now use pre-computed aggregates — no loops) ──────────────
 
-
-#function for counting attacks region-wise
 def reg_count():
-    rlist = []
-    for i in data['region_txt'].value_counts().index:
-        l=[]
-        l.append(i)
-        l.append(data['region_txt'].value_counts()[i])
-        rlist.append(l)
-    r_df = pd.DataFrame(rlist,columns=['region_name','region_cnt'])
-    fig = px.bar(r_df, x='region_name', y='region_cnt',labels={'region_cnt':'Number of Attacks','region_name':'Region'},color="region_cnt",title='Number of terrorist attacks region-wise',height=500)
-    
-    return fig
+    return px.bar(reg_counts, x='region_name', y='region_cnt',
+                  labels={'region_cnt': 'Number of Attacks', 'region_name': 'Region'},
+                  color='region_cnt', title='Number of terrorist attacks region-wise', height=500)
 
-
-
-#function for counting attacks year-wise
 def year_count():
-    year_list = []
-    for i in data['iyear'].value_counts().index:
-        l=[]
-        l.append(i)
-        l.append(data['iyear'].value_counts()[i])
-        year_list.append(l)
-    year_df = pd.DataFrame(year_list,columns=['Year','year_cnt'])
-    fig = px.bar(year_df, x='Year', y='year_cnt',labels={'year_cnt':'Number of Attacks','Year':'Year'},color="year_cnt", title='Number of terrorist attacks year-wise', height=500)
-    return fig
+    return px.bar(year_counts.sort_values('Year'), x='Year', y='year_cnt',
+                  labels={'year_cnt': 'Number of Attacks', 'Year': 'Year'},
+                  color='year_cnt', title='Number of terrorist attacks year-wise', height=500)
 
-
-
-#function for attacks attack type wise
 def attack_count():
-    attack_type_list = []
-    for i in data['attacktype1_txt'].unique():
-        l=[]
-        l.append(i)
-        l.append(data['attacktype1_txt'].value_counts()[i])
-        attack_type_list.append(l)
-    attack_type_df = pd.DataFrame(attack_type_list,columns=['Attack_type','Attack_cnt'])
-    fig = px.bar(attack_type_df, x='Attack_type', y='Attack_cnt',labels={'Attack_cnt':'Number of Attacks','Attack_type':'Attack Types'},color="Attack_cnt",title='Number of terrorist attacks attack-type-wise', height=500)
-    return fig
+    return px.bar(attack_counts, x='Attack_type', y='Attack_cnt',
+                  labels={'Attack_cnt': 'Number of Attacks', 'Attack_type': 'Attack Types'},
+                  color='Attack_cnt', title='Number of terrorist attacks attack-type-wise', height=500)
 
-
-
-
-#function for counting attacks state-wise and returning bar plot
 def state_count():
-    df = data[data['country_txt']=='India']
-    state_list = []
-    for i in df['provstate'].unique():
-        l=[]
-        l.append(i)
-        l.append(df['provstate'].value_counts()[i])
-        state_list.append(l)
-    state_df = pd.DataFrame(state_list,columns=['State','Attack_cnt'])
-    fig = px.bar(state_df, x='State', y='Attack_cnt',labels={'Attack_cnt':'Number of Attacks','State':'State'},color="Attack_cnt",title='State-wise Attack Concentration in India', height=500)
-    return fig
+    return px.bar(state_counts, x='State', y='Attack_cnt',
+                  labels={'Attack_cnt': 'Number of Attacks', 'State': 'State'},
+                  color='Attack_cnt', title='State-wise Attack Concentration in India', height=500)
 
-
-
-
-#function for counting attacktypes in india and returning pie chart
 def attacks_count():
-    df = data[data['country_txt']=='India']
-    india_attacks = []
-    for i in df['attacktype1_txt'].unique():
-        l=[]
-        l.append(i)
-        l.append(df['attacktype1_txt'].value_counts()[i])
-        india_attacks.append(l)
-    india_attack_df = pd.DataFrame(india_attacks,columns=['Attack Type','attack_cnt'])
-    fig = px.pie(india_attack_df, values='attack_cnt', names='Attack Type',
-             title='Type of Attacks in India and their percentage',
-             hover_data=['attack_cnt'], labels={'attack_cnt':'Count of attacks'})
-    return fig
+    return px.pie(india_attacks, values='attack_cnt', names='Attack Type',
+                  title='Type of Attacks in India and their percentage',
+                  hover_data=['attack_cnt'], labels={'attack_cnt': 'Count of attacks'})
 
-
-
-
-#function for line plot of year v/s number of attacks
 def india_count():
-    df = data[data['country_txt']=='India']
-    india_cnt_list = []
-    for i in df['iyear'].unique():
-        l=[]
-        l.append(i)
-        l.append(df['iyear'].value_counts()[i])
-        india_cnt_list.append(l)
-    d=[]
-    for i in range(1970,2019):
-        if i not in df['iyear'].unique():
-            d.append(i)
-    for i in d:
-        l=[]
-        l.append(i)
-        l.append(0)
-        india_cnt_list.append(l)
-    india_cnt_list.sort()
-    india_cnt_df = pd.DataFrame(india_cnt_list,columns=['Year','Attack_cnt'])
-    fig = px.line(india_cnt_df, x="Year", y="Attack_cnt",labels={'Attack_cnt':'Number of Attacks'}, title='Year Wise attack count in India')
-    return fig
+    return px.line(india_year_counts, x='Year', y='Attack_cnt',
+                   labels={'Attack_cnt': 'Number of Attacks'},
+                   title='Year Wise attack count in India')
 
-
-
-#scatter plot for attack type v/s year
 def india_attack_year():
-    df = data[data['country_txt']=='India']
-    year_attack_type=[]
-    for i in df['iyear'].unique():
-        dx = df[df['iyear']==i]
-        m = max(dx['attacktype1_txt'].value_counts())
-        for j in dx['attacktype1_txt'].unique():
-            l=[]
-            if dx['attacktype1_txt'].value_counts()[j] == m:
-                l.append(i)
-                l.append(j)
-                year_attack_type.append(l)
-    year_attack_type.sort()
-    india_year_df = pd.DataFrame(year_attack_type,columns=['Year','Attack Type'])
-    fig = px.scatter(india_year_df,x='Year', y='Attack Type')
-    return fig
+    # Most common attack type per year in India
+    year_attack_type = (
+        india_data.groupby(['iyear', 'attacktype1_txt'])
+        .size()
+        .reset_index(name='cnt')
+    )
+    # Keep only the top attack type per year
+    idx = year_attack_type.groupby('iyear')['cnt'].idxmax()
+    top = year_attack_type.loc[idx].rename(columns={'iyear': 'Year', 'attacktype1_txt': 'Attack Type'})
+    return px.scatter(top.sort_values('Year'), x='Year', y='Attack Type')
 
-
-
-#scatter plot for year v/s attack type
 def ind_attacktype():
-    df = data[data['country_txt']=='India']
-    year_att_type=[]
-    for i in df['iyear'].unique():
-        dx = df[df['iyear']==i]
-        for j in dx['attacktype1_txt'].unique():
-            l=[]
-            l.append(i)
-            l.append(j)
-            l.append(dx['attacktype1_txt'].value_counts()[j])
-            year_att_type.append(l)
-    india_type_df = pd.DataFrame(year_att_type,columns=['Year','Attack Type','Attack_cnt'])
-    fig = px.scatter(india_type_df, x="Year", y="Attack Type", color="Attack Type",size='Attack_cnt', hover_data=['Attack Type','Attack_cnt'],labels={'Attack_cnt':'Attack Count'})
+    year_att_type = (
+        india_data.groupby(['iyear', 'attacktype1_txt'])
+        .size()
+        .reset_index(name='Attack_cnt')
+    )
+    year_att_type.columns = ['Year', 'Attack Type', 'Attack_cnt']
+    return px.scatter(year_att_type, x='Year', y='Attack Type', color='Attack Type',
+                      size='Attack_cnt', hover_data=['Attack Type', 'Attack_cnt'],
+                      labels={'Attack_cnt': 'Attack Count'})
+
+def targettype_count():
+    return px.pie(target_counts, values='Attack_cnt', names='Target_type',
+                  title='Target types and their percentage',
+                  hover_data=['Attack_cnt'],
+                  labels={'Attack_cnt': 'Count of attacks', 'Target_type': 'Target Type'})
+
+def con_regwise():
+    rc = reg_counts['region_cnt'].values[:12]
+    r = rc.reshape(3, 4)
+    fig = px.imshow(r, color_continuous_scale=px.colors.sequential.Cividis_r,
+                    title="Concentration of attacks in various regions")
+    annotations = [
+        "Middle East & North Africa", "South Asia", "Sub-Saharan Africa", "South America",
+        "Western Europe", "Southeast Asia", "Central America & Caribbean", "Eastern Europe",
+        "North America", "East Asia", "Central Asia", "Australasia & Oceania"
+    ]
+    positions = [(i, j) for i in range(3) for j in range(4)]
+    for ann, (row, col) in zip(annotations, positions):
+        fig.add_annotation(x=col, y=row, text=ann, showarrow=False,
+                           font=dict(size=8, color='white'), xref='x', yref='y')
     return fig
 
-
-
-
-#function for dropdown state-wise attack type
 def func_state_type():
-    df = data[data['country_txt']=='India']
-    l=[]
-    for i in df['provstate'].unique():
-        l.append({'label':i,'value':i})
     return dcc.Dropdown(
         id='state_attack_type',
-        options= l,
-         placeholder = 'Select a state'
-       )
+        options=[{'label': i, 'value': i} for i in sorted(india_data['provstate'].dropna().unique())],
+        placeholder='Select a state'
+    )
 
-
-
-#dropdown for stacked chart
 def func_stacked_chart():
-    r =[
-        {'label':'By country','value':0},
-        {'label':'By Attack Type','value':1},
-        {'label':'By target type','value':2},
-        {'label':'By weapon type','value':3},
-    ]
     return dcc.Dropdown(
         id='stacked_chart',
-        options=r,
+        options=[
+            {'label': 'By country',     'value': 0},
+            {'label': 'By Attack Type', 'value': 1},
+            {'label': 'By target type', 'value': 2},
+            {'label': 'By weapon type', 'value': 3},
+        ],
         value=0
     )
 
+def region_graph(input_choice):
+    df = data[data['region_txt'] == input_choice]
+    reg_df = df['country_txt'].value_counts().reset_index()
+    reg_df.columns = ['country_name', 'country_cnt']
+    return px.bar(reg_df, x='country_name', y='country_cnt',
+                  labels={'country_cnt': 'Number of Attacks', 'country_name': 'Country'},
+                  title='Number of terrorist attacks country-wise (in each region)', height=500)
 
-#pie for target type and percentage
-def targettype_count():
-    target_list=[]
-    for i in data['targtype1_txt'].unique():
-        l=[]
-        l.append(i)
-        l.append(data['targtype1_txt'].value_counts()[i])
-        target_list.append(l)
-    target_df = pd.DataFrame(target_list,columns=['Target_type','Attack_cnt'])
-    fig = px.pie(target_df, values='Attack_cnt', names='Target_type',
-             title='Target types and their percentage',
-             hover_data=['Attack_cnt'], labels={'Attack_cnt':'Count of attacks','Target_type':'Target Type'})
-    return fig
+# ─── LAYOUT ───────────────────────────────────────────────────────────────────
 
-
-
-#function for heatmap
-rlist = []
-for i in data['region_txt'].value_counts().index:
-    l=[]
-    l.append(i)
-    l.append(data['region_txt'].value_counts()[i])
-    rlist.append(l)
-r_df = pd.DataFrame(rlist,columns=['region_name','region_cnt'])
-def con_regwise():
-    rc = r_df['region_cnt']
-    r = np.array(rc)
-    r = r.reshape(3,4)
-    t = r_df['region_name']
-    t = np.array(t)
-    fig = px.imshow(r, color_continuous_scale=px.colors.sequential.Cividis_r,title="Concentration of attacks in various regions")
-    fig.add_annotation(
-    x=0.42,
-    y=0.9,
-    text="Middle East & North Africa",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.47,
-    y=0.9,
-    text="South Asia",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.53,
-    y=0.9,
-    text="Sub-Saharan Africa",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.58,
-    y=0.9,
-    text="South America",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.42,
-    y=0.5,
-    text="Western Europe",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.47,
-    y=0.5,
-    text="Southeast Asia",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.53,
-    y=0.5,
-    text="Central America & Caribbean",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.58,
-    y=0.5,
-    text="Eastern Europe",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.42,
-    y=0.17,
-    text="North America",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.47,
-    y=0.17,
-    text="East Asia",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.53,
-    y=0.17,
-    text="Central Asia",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-    fig.add_annotation(
-    x=0.58,
-    y=0.17,
-    text="Australasia & Oceania",
-    xref="paper",
-    yref="paper",
-    showarrow=False,
-    font_size=8, font_color='white'),
-
-
-    return fig
-
-
-
-
-#layout for App page(page 2)
 def App():
     layout = html.Div([
-    nav,
-    html.Div(
-        style={
-        'backgroundColor':'#D3D3D3',
-        },
-        children=[ 
-            html.Br(),
-            html.Br(),
-            html.H1(children = "Infographics - Global Analysis",
-            style={
-                'textAlign':'center',
-                'color':'#456fBv',
-
-            }
-    ),
-    html.Br(),
-    ]
-    ),
-    html.Br(),
-    html.Br(),
-    html.H5('Choose a region'),
-    dcc.Dropdown(
-        id='reg-wise-count',
-        options= [
-          {'label': i , 'value': i} for i in data['region_txt'].unique()
-        ],
-        placeholder="Please select a region",
-    ),
-    dcc.Graph(id='region-bar'),
-
-    html.Br(),
-    dcc.Graph(id='region-count',figure=reg_count()),
-
-    html.Br(),
-    dcc.Graph(id='year-count',figure=year_count()),
-
-    html.Br(),
-    dcc.Graph(id='attack-count',figure=attack_count()),
-
-    html.Br(),
-    dcc.Graph(id='con-region',figure=con_regwise()),
-
-    html.Br(),
-    html.P("Choose a year"),
-    dcc.Dropdown(id="year-attack",
-    options =[
-        {'label':i,'value':i} for i in data['iyear'].unique()
-    ],
-    placeholder="Please select a year"
-    ),
-    dcc.Graph(id="year_graph"),
-
-
-    html.Br(),
-    html.P('Incidents per year grouped by'),
-    html.Div([func_stacked_chart()]),
-    dcc.Graph(id='country_wise_line'),
-    html.Br(),
-    dcc.Graph(id='target_type',figure=targettype_count()),
-
-    html.Br(),
-
-    html.Div(style={
-        'backgroundColor': '#000000' 
-    },
-    children=[html.Br()]),
-    html.Div(style={
-        'backgroundColor':'#D3D3D3',
-        },
-        children=[
-            html.Br(),
-            html.H2(children='India Infographics',
-             style={
-                'textAlign':'center',
-                'color':'#456fBv',
-
-            }),
-            html.Br()
-        ]
+        nav,
+        html.Div(
+            style={'backgroundColor': '#D3D3D3'},
+            children=[
+                html.Br(), html.Br(),
+                html.H1("Infographics - Global Analysis",
+                        style={'textAlign': 'center', 'color': '#456fBv'}),
+                html.Br(),
+            ]
         ),
-    html.Br(),
-    html.Br(),
-    dcc.Graph(id='state_wise',figure=state_count()),
-
-    html.Br(),
-    dcc.Graph(id='india_attacks',figure=attacks_count()),
-
-    html.Br(),
-    html.P('Choose a state'),
-    html.Div([func_state_type()]),
-    dcc.Graph(id='state_attack_type_pie'),
-
-    html.Br(),
-    dcc.Graph(id='india-yearwise', figure=india_count()),
-
-    html.Br(),
-    dcc.Graph(id='india-attacktype-yearwise',figure=india_attack_year()),
-
-    html.Br(),
-    dcc.Graph(id='ind-year-attacktype',figure=ind_attacktype())
-
-
+        html.Br(), html.Br(),
+        html.H5('Choose a region'),
+        dcc.Dropdown(
+            id='reg-wise-count',
+            options=[{'label': i, 'value': i} for i in sorted(data['region_txt'].dropna().unique())],
+            placeholder="Please select a region",
+        ),
+        dcc.Graph(id='region-bar'),
+        html.Br(),
+        dcc.Graph(id='region-count',   figure=reg_count()),
+        html.Br(),
+        dcc.Graph(id='year-count',     figure=year_count()),
+        html.Br(),
+        dcc.Graph(id='attack-count',   figure=attack_count()),
+        html.Br(),
+        dcc.Graph(id='con-region',     figure=con_regwise()),
+        html.Br(),
+        html.P("Choose a year"),
+        dcc.Dropdown(
+            id='year-attack',
+            options=[{'label': i, 'value': i} for i in sorted(data['iyear'].dropna().unique())],
+            placeholder="Please select a year"
+        ),
+        dcc.Graph(id='year_graph'),
+        html.Br(),
+        html.P('Incidents per year grouped by'),
+        html.Div([func_stacked_chart()]),
+        dcc.Graph(id='country_wise_line'),
+        html.Br(),
+        dcc.Graph(id='target_type',    figure=targettype_count()),
+        html.Br(),
+        html.Div(style={'backgroundColor': '#000000'}, children=[html.Br()]),
+        html.Div(
+            style={'backgroundColor': '#D3D3D3'},
+            children=[
+                html.Br(),
+                html.H2('India Infographics', style={'textAlign': 'center', 'color': '#456fBv'}),
+                html.Br()
+            ]
+        ),
+        html.Br(), html.Br(),
+        dcc.Graph(id='state_wise',            figure=state_count()),
+        html.Br(),
+        dcc.Graph(id='india_attacks',         figure=attacks_count()),
+        html.Br(),
+        html.P('Choose a state'),
+        html.Div([func_state_type()]),
+        dcc.Graph(id='state_attack_type_pie'),
+        html.Br(),
+        dcc.Graph(id='india-yearwise',        figure=india_count()),
+        html.Br(),
+        dcc.Graph(id='india-attacktype-yearwise', figure=india_attack_year()),
+        html.Br(),
+        dcc.Graph(id='ind-year-attacktype',   figure=ind_attacktype()),
     ])
     return layout
-
-
-
-def region_graph(input_choice):
-    df = data[data["region_txt"]==input_choice]
-    reg_list=[]
-    for i in df['country_txt'].unique():
-        l=[]
-        l.append(i)
-        l.append(df['country_txt'].value_counts()[i])
-        reg_list.append(l)
-    reg_df = pd.DataFrame(reg_list,columns=['country_name','country_cnt'])
-    fig = px.bar(reg_df, x='country_name', y='country_cnt',labels={'country_cnt':'Number of Attacks','country_name':'Country'}, title='Number of terrorist attacks country-wise (in each region)', height=500)
-    return fig
